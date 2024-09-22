@@ -1,0 +1,32 @@
+[
+  {
+    "HName": "Amrita Institute of Medical Sciences",
+    "patientCount": 1300,
+    "Hlocation": "Kochi"
+  },
+  {
+    "HName": "Aster Medcity",
+    "patientCount": 900,
+    "Hlocation": "Kochi"
+  },
+  {
+    "HName": "Kerala Institute of Medical Sciences (KIMS)",
+    "patientCount": 1400,
+    "Hlocation": "Thiruvananthapuram"
+  },
+  {
+    "HName": "Malabar Institute of Medical Sciences (MIMS)",
+    "patientCount": 800,
+    "Hlocation": "Kozhikode"
+  },
+  {
+    "HName": "Lakeshore Hospital",
+    "patientCount": 1100,
+    "Hlocation": "Kochi"
+  },
+  {
+    "HName": "AKG1",
+    "patientCount": 1600,
+    "Hlocation": "Kannur"
+  }
+]

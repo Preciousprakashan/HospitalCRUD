@@ -9,10 +9,10 @@ router.get('/filecheck', (req, res) => {
     fs.access('./public/hospitaldb.json', fs.constants.F_OK, (err) => {
         if (err) {
             console.log('File does not exist');
-            return res.status(404).json({ message: 'File does not exist' });
+            return res.json({ message: 'File does not exist' });
         } else {
             console.log('File does exist');
-            return res.status(200).json({ message: 'File exists' });
+            return res.json({ message: 'File exists' });
         }
     });
 });
@@ -22,10 +22,10 @@ router.get('/file', (req, res) => {
     try {
         const data = fs.readFileSync('./public/hospitaldb.json', 'utf-8');
         console.log(data); // You can keep this if you want to log it
-        return res.status(200).json(JSON.parse(data)); // Send the JSON data as a response
+        return res.json(JSON.parse(data)); // Send the JSON data as a response
     } catch (err) {
         console.error('Error reading file:', err);
-        return res.status(500).json({ message: 'Error reading file' });
+        return res.json({ message: 'Error reading file' });
     }
 });
 
@@ -37,7 +37,7 @@ router.post('/insert', (req, res) => {
     fs.readFile('./public/hospitaldb.json', 'utf-8', (err, data) => {
         if (err) {
             console.error('Error reading file:', err);
-            return res.status(500).json({ message: 'Error reading file' });
+            return res.json({ message: 'Error reading file' });
         }
 
         const hospitals = JSON.parse(data); // Parse the existing data
@@ -47,10 +47,10 @@ router.post('/insert', (req, res) => {
         fs.writeFile('./public/hospitaldb.json', JSON.stringify(hospitals), (err) => {
             if (err) {
                 console.error('Error writing file:', err);
-                return res.status(500).json({ message: 'Error writing file' });
+                return res.json({ message: 'Error writing file' });
             }
 
-            return res.status(201).json(hospitals);
+            return res.json(hospitals);
         });
     });
 });
@@ -66,14 +66,14 @@ router.put('/edit/:hName', (req, res) => {
     fs.readFile('./public/hospitaldb.json', 'utf-8', (err, data) => {
         if (err) {
             console.error('Error reading file:', err);
-            return res.status(500).json({ message: 'Error reading file' });
+            return res.json({ message: 'Error reading file' });
         }
 
         const hospitals = JSON.parse(data); // Parse the existing data
         const index = hospitals.findIndex(hospital => hospital.HName === hospitalName); // Find the index of the hospital
 
         if (index === -1) {
-            return res.status(404).json({ message: 'Hospital not found' });
+            return res.json({ message: 'Hospital not found' });
         }
 
         // Update the hospital record
@@ -83,10 +83,10 @@ router.put('/edit/:hName', (req, res) => {
         fs.writeFile('./public/hospitaldb.json', JSON.stringify(hospitals, null, 2), (err) => {
             if (err) {
                 console.error('Error writing file:', err);
-                return res.status(500).json({ message: 'Error writing file' });
+                return res.json({ message: 'Error writing file' });
             }
 
-            return res.status(200).json({ message: 'Hospital record updated successfully', updatedHospital: hospitals[index] });
+            return res.json({ message: 'Hospital record updated successfully', updatedHospital: hospitals[index] });
         });
     });
 });
@@ -100,24 +100,24 @@ router.delete('/delete/:hName', (req, res) => {
     fs.readFile('./public/hospitaldb.json', 'utf-8', (err, data) => {
         if (err) {
             console.error('Error reading file:', err);
-            return res.status(500).json({ message: 'Error reading file' });
+            return res.json({ message: 'Error reading file' });
         }
 
         const hospitals = JSON.parse(data); // Parse the existing data
         const newHospitals = hospitals.filter(hospital => hospital.HName !== hospitalName); // Filter out the hospital to be deleted
 
         if (hospitals.length === newHospitals.length) {
-            return res.status(404).json({ message: 'Hospital not found' });
+            return res.json({ message: 'Hospital not found' });
         }
 
         // Write the updated data back to the file
         fs.writeFile('./public/hospitaldb.json', JSON.stringify(newHospitals, null, 2), (err) => {
             if (err) {
                 console.error('Error writing file:', err);
-                return res.status(500).json({ message: 'Error writing file' });
+                return res.json({ message: 'Error writing file' });
             }
 
-            return res.status(200).json({ message: 'Hospital record deleted successfully' });
+            return res.json({ message: 'Hospital record deleted successfully' });
         });
     });
 });
